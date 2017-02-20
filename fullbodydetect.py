@@ -2,8 +2,8 @@
 
 import cv2
 import time
+import pyfly2
 #import MotorControl as mc
-
 
 
 
@@ -17,8 +17,9 @@ def initCam():
 
 
 def processframe():
-    retval, frame = cam.retrieve()
+    #retval, frame = cam.retrieve()
     #frame = cv2.imread('img.png')
+    frame = camera.GrabNumPyImage(format='bgr')
     
     #frame = cv2.resize(frame,None,fx=0.5, fy=0.5, interpolation = cv2.INTER_AREA)
     detect = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -48,7 +49,11 @@ def processframe():
 
 
         
-
+context = pyfly2.Context()
+if context.num_cameras:
+    camera = context.get_camera(0)
+    camera.Connect()
+    camera.StartCapture()
 	
 
 #port = int(raw_input("Camera Port: "))
