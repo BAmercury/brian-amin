@@ -2,43 +2,17 @@
 
 import cv2
 import time
-import pigpio
-import MotorControl as MC
+from socket import *
+
 #import pyfly2
 #import MotorControl as mc
 
 #Motor Functions
-def startShooting():
-    PI.write(FIRING_PIN, pigpio.HIGH)
-    print("Firing")
 
-def stopShooting():
-    PI.write(FIRING_PIN, pigpio.LOW)
-    print("Not firing")
-
-def turnRight():
-    panMotor.setSpeed(1.0)
-    print("Turning right")
-
-def turnLeft():
-    panMotor.setSpeed(-1.0)
-    print("Turning left")
-
-def stopTurning():
-    panMotor.setSpeed(0.0)
-    print("Stopping turning")
 
 def getArea(rectangle):
     return rectangle[2] * rectangle[3]
 
-
-
-def initCam():
-    port = int(raw_input("Camera Port: "))
-    cam = cv2.VideoCapture('WIN_20170116_16_17_18_Pro.mp4')
-    #cam.release()
-    #cam.open(port)
-    time.sleep(5)
 
 
 
@@ -64,19 +38,13 @@ def processframe():
         cv2.circle(frame, (center), 3, (0, 200, 0), -1)
         center = ( (x+(w/2)))
 		#print(center)
-        if (center < 320 and center > 160 ):
-            cv2.putText(frame, status, (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0, 0, 255), 2)
-            stopTurning()
-            startShooting()
-        elif (center > 320):
-            stopShooting()
-            turnRight()
-        elif (center < 160):
-            stopShooting()
-            turnLeft()
-        else:
-            stopShooting()
-            stopTurning()
+        if (center < 390 and center > 250 ):
+            cv2.putText(frame, "Target Found", (20, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0, 0, 255), 2)
+            clientSocket.sendto('shoot'.encode(),serverAddress)
+        elif (center > 390):
+            clientSocket.sendto('right'.encode(),serverAddress)
+        elif (center < 250):
+            clientSocket.sendto('left'.encode(),serverAddress)
     cv2.imshow("w", frame)
 
 
@@ -87,11 +55,13 @@ def processframe():
 #    camera.Connect()
 #    camera.StartCapture()
 
-PI = pigpio.pi()
+targetIP = '192.168.1.102'
+port = 12000
 
-FIRING_PIN = 6
-PAN_PIN = 12
-#TILT_PIN = 18
+clientSocket = socket(AF_INET,SOCK_DGRAM)
+serverAddress = (targetIP, port)
+
+
 
 STATE_TARGET_FOUND = False
 STATE_PANNING = False
@@ -108,6 +78,7 @@ cam = cv2.VideoCapture(port)
 cam.release()
 cam.open(port)
 time.sleep(5)
+clientSocket.sendto('right'.encode(),serverAddress)
 
 
 while True:
@@ -116,5 +87,4 @@ while True:
 		break
 cam.release()
 cv2.DestoryAllWindows()
-
 
