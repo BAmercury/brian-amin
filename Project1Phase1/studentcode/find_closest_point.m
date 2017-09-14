@@ -47,7 +47,8 @@ heady = headpt(2);
 slope = (heady - basey) / (headx - basex);
 
 %generate line:
-linepts = 
+linepts =  [ linspace(basex,headx,n); linspace(basey,heady,n)]
+%need to test without using segment one, since that is the robot starting at origin and segment 2 is the point directly above origin? we need to generate a line from p2 to p3 not p1 to p2, p1 is origin of circle
 
 
 
