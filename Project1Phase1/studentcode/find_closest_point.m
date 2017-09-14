@@ -30,6 +30,27 @@ function [pt_min, dist_min] = find_closest_point(position, path, segment)
 %navigating path/waypts: point = waypts(:,segment) (all rows, but only the first
 %column, etc. x = point(1) y = point(2)
 
+%number of points that make up the line segment
+n = 5
+
+%base point of the line segment
+basept = path(:,segment);
+basex = basept(1);
+basey = basept(2);
+
+%head point of the line segment
+headpt = path(:,segment+1);
+headx = headpt(1);
+heady = headpt(2);
+
+%slope:
+slope = (heady - basey) / (headx - basex);
+
+%generate line:
+linepts = 
+
+
+
 
 dist_min = Inf;
 pt_min = [0; 0];
