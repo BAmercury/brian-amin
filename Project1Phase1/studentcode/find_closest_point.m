@@ -19,6 +19,18 @@ function [pt_min, dist_min] = find_closest_point(position, path, segment)
 % =================== Your code goes here ===================
 
 % You should fill this in
+
+
+%can we use segment as a linear index for path? then we can begin by
+%creating some line with P1 and P2 (two points along path). We project the
+%robot pose onto this line and see if its close to the projected point, or
+%the two ends using an algorithim that determines closet point
+
+
+%navigating path/waypts: point = waypts(:,segment) (all rows, but only the first
+%column, etc. x = point(1) y = point(2)
+
+
 dist_min = Inf;
 pt_min = [0; 0];
 
