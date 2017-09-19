@@ -16,17 +16,25 @@ radius = params.radius;
 margin = 5;
 lookahead = margin + radius;
 
-%segment:
+%segment 1 is the inital location of robot, so we index at 2
 segment = 2;
+pose = transpose(qd.pos);
+[proj, dist_min] = find_closest_point(pose, waypts,segment)
 
-[proj, dist_min] = find_closest_point(qd, waypts,segment)
+closing_distance = length(proj-qd.pos);
+while (dist_min > closing_distance)
+    u = [10,10]
+    
+end
 
 
 
 
 
 
-u    = [32,0]; % You should fill this in
+
+
+%u    = [32,0]; % You should fill this in
 
 
 

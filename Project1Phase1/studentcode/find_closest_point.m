@@ -30,29 +30,19 @@ function [pt_min, dist_min] = find_closest_point(position, path, segment)
 %navigating path/waypts: point = waypts(:,segment) (all rows, but only the first
 %column, etc. x = point(1) y = point(2)
 
-%number of points that make up the line segment
-n = 5
+
+dist_min = Inf;
+pt_min = [0; 0];
+
 
 %base point of the line segment
 if nargin == 3
     basept = path(:,segment);
-    basex = basept(1);
-    basey = basept(2);
     
     
     %head point of the line segment
     headpt = path(:,segment+1);
-    headx = headpt(1);
-    heady = headpt(2);
     
-    
-    %slope:
-    %slope = (heady - basey) / (headx - basex);
-
-    %generate line:
-    %linepts =  [ linspace(basex,headx,n); linspace(basey,heady,n)]
-    %need to test without using segment one, since that is the robot starting at origin and segment 2 is the point directly above origin? we need to generate a line from p2 to p3 not p1 to p2, p1 is origin of circle
-
     
     %projection:
     poi = headpt - basept;
@@ -75,7 +65,7 @@ if nargin == 3
     
     
     %found point closet to path (2x1)
-    pt_min = proj;
+    pt_min = transpose(proj);
     
     %now to find min distance of robot to path
     vector = pt_min - pos;
@@ -93,9 +83,6 @@ end
 
 
 
-
-dist_min = Inf;
-pt_min = [0; 0];
 
 % =================== Your code ends here ===================
 
