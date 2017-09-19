@@ -47,43 +47,43 @@ if nargin == 3
     
     
     %slope:
-    %slope = (heady - basey) / (headx - basex);
+    slope = (heady - basey) / (headx - basex);
 
     %generate line:
-    %linepts =  [ linspace(basex,headx,n); linspace(basey,heady,n)]
+    linepts =  [ linspace(basex,headx,n); linspace(basey,heady,n)]
     %need to test without using segment one, since that is the robot starting at origin and segment 2 is the point directly above origin? we need to generate a line from p2 to p3 not p1 to p2, p1 is origin of circle
+  % returns q the closest point to p on the line segment from A to B 
 
+  % vector from A to B
+  AB = (B-A);
+  % squared distance from A to B
+  AB_squared = dot(AB,AB);
+  if(AB_squared == 0)
+    % A and B are the same point
+    q = A;
+  else
+    % vector from A to p
+    Ap = (p-A);
+    % from http://stackoverflow.com/questions/849211/
+    % Consider the line extending the segment, parameterized as A + t (B - A)
+    % We find projection of point p onto the line. 
+    % It falls where t = [(p-A) . (B-A)] / |B-A|^2
+    t = dot(Ap,AB)/AB_squared;
+    if (t < 0.0) 
+      % "Before" A on the line, just return A
+      q = A;
+    else if (t > 1.0) 
+      % "After" B on the line, just return B
+      q = B;
+    else
+      % projection lines "inbetween" A and B on the line
+      q = A + t * AB;
+    end
+  end
+end
     
     %projection:
-    poi = headpt - basept;
-    pos = position;
-    poi_squared = dot(poi,poi);
-    proj = (dot(pos, poi) / poi_squared);
     
-    
-    if (proj < 0.00)
-        %Point is before basept
-        proj = basept;
-    elseif (proj > 1.00)
-        % Point is after the headpt
-        proj = headpt;
-    else
-        %Point lines inbetween base and head:
-        proj = basept + proj * poi;
-        
-    end
-    
-    
-    %found point closet to path (2x1)
-    pt_min = proj;
-    
-    %now to find min distance of robot to path
-    vector = pt_min - pos;
-    dist_min = length(vector);
-            
-    
-  
-     
 
 
 end

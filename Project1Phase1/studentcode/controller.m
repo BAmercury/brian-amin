@@ -12,7 +12,17 @@ function [u] = controller(qd, waypts, t, params)
 
 % =================== Your code goes here ===================
 
-u    = zeros(2,1); % You should fill this in
+
+
+
+
+
+u    = [32,0]; % You should fill this in
+
+
+
+
+
 
 % =================== Your code ends here ===================
 
