@@ -18,16 +18,14 @@ t = linspace(0,2*pi,n);
 %get x and y these will pretty much be the waypoints
 x = center(1) + radius*sin(t);
 xflip = fliplr(x);
-xflip(1) = [];
 y = center(2) + radius*cos(t);
 yflip = fliplr(y);
-yflip(1) = [];
 %line = line(x,y)
 
 
 %waypts = [center(1), x ; center(2), y];
 
-%flip to follow counterclockwise trajectory
+%flip to follow counterclockwise trajectory and truncate werid initial
 %index
 waypts = [0, xflip ; 0, yflip];
 %waypts = [xflip ; yflip];

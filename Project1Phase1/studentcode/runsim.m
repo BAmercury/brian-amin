@@ -71,7 +71,7 @@ for iter = 1:max_iter
     % Initialize quad plot
     if iter == 1
         RP = RobotPlot(x0, params.wheel_base, params.wheel_radius, 0.105, botcolors(1,:), max_iter, h_3d);
-        desired_state = find_closest_point(x0, waypts);
+        desired_state = find_closest_point(x0(1:2), waypts);
         RP.UpdateRobotPlot(x, desired_state, time);
         h_title = title(sprintf('iteration: %d, time: %4.2f', iter, time));
     end
@@ -85,7 +85,7 @@ for iter = 1:max_iter
     ttraj((iter-1)*nstep+1:iter*nstep)   = tsave(1:end-1);
 
     % Update quad plot
-    desired_state = find_closest_point(x, waypts);
+    desired_state = find_closest_point(x(1:2), waypts);
     RP.UpdateRobotPlot(x, desired_state, time + cstep);
 
     set(h_title, 'String', sprintf('iteration: %d, time: %4.2f', iter, time + cstep))

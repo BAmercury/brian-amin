@@ -35,6 +35,66 @@ dist_min = Inf;
 pt_min = [0; 0];
 
 
+if nargin == 2
+    %manual way of finding closet point to position of the robot
+    pos = [position(1); position(2)];
+    dist_waypt = Inf;
+    
+
+    for (i = 2:length(path))
+        foo = path(:,i);
+        vector = foo - pos;
+        %vector = foo - position;
+        dist = norm(vector);
+        if (dist < dist_waypt)
+            %minimum distance between robot and indexed waypoint
+            dist_waypt = dist;
+            %waypoint closet to the robot
+            close_waypt = foo;
+            index = i; %save the index in which seems to be the closet
+        end
+    end
+    
+    %now we have the dist from robot to waypoint, and closet waypoint to
+    %robot. We must find the segment that is closet to robot and repeat our
+    %projection stuff
+    basept = close_waypt;
+    headpt = path(:,index+1);
+    
+      %projection:
+    poi = headpt - basept;
+    poi_squared = dot(poi,poi);
+    proj = (dot(pos, poi) / poi_squared);
+    
+    
+    if (proj < 0.00)
+        %Point is before basept
+        proj = basept;
+    elseif (proj > 1.00)
+        % Point is after the headpt
+        proj = headpt;
+    else
+        %Point lines inbetween base and head:
+        proj = basept + proj * poi;
+        
+    end
+    
+    
+    %found point closet to path (2x1)
+    pt_min = proj;
+    
+    %now to find min distance of robot to path
+    vector = pt_min - pos;
+    dist_min = norm(vector);
+    
+    
+    
+end    
+
+
+    
+
+
 %base point of the line segment
 if nargin == 3
     basept = path(:,segment);
@@ -46,7 +106,7 @@ if nargin == 3
     
     %projection:
     poi = headpt - basept;
-    pos = position;
+    pos = transpose(position);
     poi_squared = dot(poi,poi);
     proj = (dot(pos, poi) / poi_squared);
     
@@ -69,7 +129,7 @@ if nargin == 3
     
     %now to find min distance of robot to path
     vector = pt_min - pos;
-    dist_min = length(vector);
+    dist_min = norm(vector);
             
     
   
