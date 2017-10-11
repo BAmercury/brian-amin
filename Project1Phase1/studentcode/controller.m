@@ -52,10 +52,17 @@ if (dist_min ~= lookahead)
     control_t = [1/params.wheel_radius, -params.wheel_base / (2*params.wheel_radius); 1/params.wheel_radius, params.wheel_base / (2* params.wheel_radius)]
     
     u = control_t * cinput;
-end
-% elseif (dist_min > lookahead)
-%     %goal point must be along current segment sinze it starts inside and
-%     %ends outside. Do some geometry to figure out goal point
+elseif (dist_min > lookahead)
+    
+    
+    
+    
+    %need to do some geometry to find goal point
+    
+
+
+
+
 % else
 %     %shift to next segment, if that ends outside circle do what we did
 %     %above
