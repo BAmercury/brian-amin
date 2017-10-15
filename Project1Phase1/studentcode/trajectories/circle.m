@@ -9,27 +9,11 @@ function [waypts] = circle
 radius = 1;
 center = [0 1];
 
-%Number of points
-n = 35;
 
-%generate values from 0 to n
-t = linspace(0,2*pi,n);
+%theta=0:2*pi/360:2*pi;
+theta = 0:0.5:2*pi;
+m = radius * [cos(theta')+center(1) sin(theta')+center(2)];
 
-%get x and y these will pretty much be the waypoints
-x = center(1) + radius*sin(t);
-xflip = fliplr(x);
-xflip(1) = [];
-y = center(2) + radius*cos(t);
-yflip = fliplr(y);
-yflip(1) = [];
-%line = line(x,y)
-
-
-%waypts = [center(1), x ; center(2), y];
-
-%flip to follow counterclockwise trajectory
-%index
-waypts = [0, xflip ; 0, yflip];
-%waypts = [xflip ; yflip];
-
+waypts = m';
+waypts = [0, waypts(1,:); 0, waypts(2,:)];
 end

@@ -15,7 +15,7 @@ function [u] = controller(qd, waypts, t, params)
 %find lookahead point
 radius = params.radius;
 margin = 1;
-lookahead = 1.00;
+lookahead = 0.5;
 
 
 
@@ -52,7 +52,6 @@ else
     
     start_segment = segment_index+1;
     max_segment = length(waypts);
-    endpoint_segment = segment_index;
     
     for (i = start_segment:max_segment)
         %search for a segment endpoint that lies outside lh circle
@@ -106,38 +105,25 @@ R = l_squared / (2 * robot_goal(2));
 %% Set wheel velocities given actuator limits and relationship R = v/w
 
 
-v = params.max_vel;
+desiredVel = params.max_vel;
 
 
 w = (v / R);
 
 
-% Sign correction for W
-
 if (robot_goal(1) > 0 && robot_goal(2) > 0)
-    % w > 0
+    % 
     if (sign(w) == -1)
         w = abs(w);
     end
 elseif (robot_goal(1) > 0 && robot_goal(2) < 0)
     % w < 0
-    if (sign(w) == 1)
-        w = -w;
-    end
-elseif (robot_goal(1) < 0 && robot_goal(2) < 0)
-    if (sign(w) == -1)
-        w = abs(w);
-    end
-elseif (robot_goal(1) < 0 && robot_goal(2) > 0)
-    if (sign(w) == 1)
-        w = -w;
-    end
 end
 
 
 
    
-c_input = [0.5*v; 0.5*w];
+c_input = [v; w];
 
 
 
@@ -146,8 +132,6 @@ c_input = [0.5*v; 0.5*w];
 control_t = [(1/params.wheel_radius), ((-params.wheel_base) / (2*params.wheel_radius)); (1/params.wheel_radius), ((params.wheel_base) / (2* params.wheel_radius))];
     
 u = control_t * c_input
-
-u = real(u);
 
 
             
