@@ -13,6 +13,7 @@ params.wheel_radius = 0.033; % wheel radius m
 params.radius       = 0.105; % robot radius m
 params.max_vel      = 0.22;  % maximum translational speed m/s
 params.max_omega    = 2.84;  % maximum rotational speed rad/s
+params.max_wheel    = 6.88;
 
 % You can add any fields you want in params
 % for example you can add your controller parameters by

@@ -82,18 +82,17 @@ end
 if nargin == 3
 
     
-    if ( (segment) == length(path))
+    if ( (segment+1) == length(path))
         disp('called')
         basept = path(:, (segment-1));
         headpt = path(:, (segment));
     else
             
-        basept = path(:,segment);
+    basept = path(:,segment);
     
     
-        %head point of the line segment
-        headpt = path(:,segment+1);
-    end
+    %head point of the line segment
+    headpt = path(:,segment+1);
         
         
 

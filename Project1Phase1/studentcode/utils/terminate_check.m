@@ -1,6 +1,11 @@
 function [ terminate_cond ] = terminate_check(x, time, stop, pos_tol, time_tol)
 %TERMINATE_CHECK Check termination criteria, including position, velocity and time
 
+if time < 5
+    terminate_cond = 0;
+    return;
+end
+
 % Initialize
 pos_check = true;
 
