@@ -10,8 +10,7 @@ function [u] = controller(qd, waypts, t, params)
 % OUTPUTS:
 % u      - 2 x 1, wheel velocities [left, right]
 
-% =================== Your code goes here ===================
-
+% =================7== Your code goes here ===================
 lookahead = 0.1;
 
 

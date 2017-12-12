@@ -12,10 +12,10 @@ addpath('utils')
 % You need to implement trajhandle and controlhandle
 
 % trajectory generator
-trajhandle = @circle;
+trajhandle = @custom;
 
 % controller
-controlhandle = @controller;
+controlhandle = @controller_one;
 
 %% *********** YOU SHOULDN'T NEED TO CHANGE ANYTHING BELOW **********
 

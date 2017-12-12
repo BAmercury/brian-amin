@@ -21,8 +21,13 @@ function [boundary, blocks] = myReadEnv(filename)
 
 % You should fill this in!  Set to empty matrix so that the function will
 % run when you call it.
-boundary = [];
-blocks = [];
+
+
+data = importdata(filename);
+
+boundary = data.data(1,:);
+
+blocks = data.data(2:end,:);
 
 % =================== Your code ends here ===================
 
