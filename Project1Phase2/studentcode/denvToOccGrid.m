@@ -47,107 +47,41 @@ grid_points = world2grid(map, points);
 
 
 
-for k=1:(length(grid_points)-1)
-    % Find minrow/col and maxrow/col for each individual block
-    %if (i == length(grid_points)-1)
-    %    disp('here')
-    %    break;
-    %else
+for k=1:2:(length(grid_points)-1)
+
     grid_point_block = [grid_points(k,:); grid_points(k+1,:)];
-    %end
-    row_length = numel(grid_point_block(:,1));
-    y = 0;
-    x = 0;
-    max_row = 0;
-    min_row = inf;
-    %Find Min Row
-    for h=1:row_length
-        y = grid_point_block(h);
-    if (y < min_row)
-        min_row = y;
-    end
-    end
-    % Find max row
-    for w=1:row_length
-    x = grid_point_block(w);
-    if (x > max_row)
-        max_row = x;
-    end
+    
+    % Find min_row, max_row, min_col, and max_col
+    %rows:
+    
+    if (grid_point_block(1,1) > grid_point_block(2,1))
+        max_row = grid_point_block(1,1);
+        min_row = grid_point_block(2,1);
+    else
+        max_row = grid_point_block(2,1);
+        min_row = grid_point_block(1,1);
     end
     
-    % Finding max and min col
-    col = grid_point_block(:,2);
-    col_length = numel(col);
-    min_col = inf;
-    max_col = 0;
-    y = 0;
-    x = 0;
-    % Finding min col
-    for r=1:col_length
-        y = col(r);
-        if (y < min_col)
-            min_col = y;
-        end
+        if (grid_point_block(1,2) > grid_point_block(2,2))
+        max_col = grid_point_block(1,2);
+        min_col = grid_point_block(2,2);
+    else
+        max_col = grid_point_block(2,2);
+        min_col = grid_point_block(1,2);
     end
 
-    % Finding max col
-    for t=1:col_length
-        x = col(t);
-        if (x > max_col)
-            max_col = x;
-        end
-    end
+
     
     for (i=min_row:max_row)
-        
+        row_val = ismember(i,grid_point_block(:,1));
+
         for (j=min_col:max_col)
-            setOccupancy(map,[i j],1,'grid')
+           col_val = ismember(j,grid_point_block(:,2));
+
+           setOccupancy(map,[i j],1,'grid')
+
         end
-    end
-    
-    
-    %setOccupancy(map,[min_row max_col],1,'grid');
-    
-%     % Begin settign occupancy
-%     for (i=min_row:max_row)
-% 
-%         for (j=min_col:max_col)
-% 
-%             col_val = ismember(j,grid_points(:,2));
-%             row_val = ismember(i,grid_points(:,1));
-%             
-%             if (col_val == 1 && row_val == 0)
-%                 setOccupancy(map,[i j],1,'grid')
-%             end
-%             
-%             if (col_val == 1 && row_val == 1)
-%                 setOccupancy(map,[i j],1,'grid')
-%                 
-%                 
-%                 
-%             end
-%             
-% 
-%         end
-%     end
-    
-  
-    
-    
-%     for i=1:length(rows)
-%         for j=1:(length(cols)-1)
-%             %world_coords = grid2world(map,[row(i) cols(j)]);
-%             %val = ismember(cols(j), grid_points(:,2))
-%             
-%             if (val == 1)
-%                 setOccupancy(map,[rows(i) cols(j)],1,'grid')
-%                 %setOccupancy(map,[rows(i+1) cols(j+1)],1,'grid');
-%             end
-%         end
-%     end
 
-
-    
 
 end
     
@@ -157,7 +91,7 @@ end
 
 
 
-%map.inflate(margin)
+map.inflate(margin)
 % Width, Height, Res
 
 % =================== Your code ends here ===================
