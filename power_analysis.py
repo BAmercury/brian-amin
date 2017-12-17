@@ -4,8 +4,8 @@ import scipy.stats
 
 from matplotlib import pyplot as plt
 
-# start at 14 participants
-n_per_group = 14
+# start at 10 participants
+n_per_group = 10
 
 # effect size = 0.8
 group_means = [0.0, 0.8]
@@ -14,7 +14,7 @@ group_sigmas = [1.0, 1.0]
 n_groups = len(group_means)
 
 # number of simulations
-n_sims = 10000
+n_sims = 10
 
 # power level that we would like to reach
 desired_power = 0.8
